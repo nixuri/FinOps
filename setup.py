@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='finops',
-    version='0.0.3',
+    version='0.0.4',
     description='Financial tools for the rest of us.',
     author='Alireza Nilgaran',
     author_email='alireza.nilgaran@gmail.com',

@@ -1,6 +1,6 @@
-# Project Name
+# FinOps
 
-A brief description of what this project does and who it's for
+FinOps is a python package for financial operations.
 
 ## Table of Contents
 
@@ -11,16 +11,26 @@ A brief description of what this project does and who it's for
 
 ## Installation
 
-Describe how to install the project, including any dependencies that need to be installed.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install finops.
+
+```pip install finops```
 
 ## Usage
+```import finops```
 
-Provide instructions and examples for how to use the project.
+```import datetime```
+
+```ticker = finops.Ticker("778253364357513")```
+
+```ticker.get_price_history()```
+
+```tse = finops.TehranStockExchange()```
+
+```tse.get_shareholders_data(start_date=datetime(2020, 1, 1), end_date=datetime(2023, 1, 1))```
 
 ## Contributing
 
-Explain how others can contribute to the project, including any guidelines they should follow.
+Contributions are always welcome!
 
 ## License
 
-Include any relevant license information for the project.

@@ -9,6 +9,7 @@ from finops.config import (
     PRICE_HISTORY_FIELD_MAP,
     SHAREHOLDER_FIELD_MAP,
 )
+from finops.utils.wrappers import catch
 from finops.logger import logger
 from finops.utils.base_scraper import BaseScraper
 
@@ -19,9 +20,9 @@ class Ticker(BaseScraper):
         self.ticker_index = ticker_index
 
     def _preprocess_shareholder_data(self, parsed_response, date):
-        preprocessed_response = parsed_response.get("shareShareholder", [])
-        if not preprocessed_response:
-            return None
+        preprocessed_response = parsed_response["shareShareholder"]
+        if len(preprocessed_response) == 0:
+            return pd.DataFrame(columns=SHAREHOLDER_DATA_COLUMNS)
 
         preprocessed_response = (
             pd.DataFrame(preprocessed_response)
@@ -52,6 +53,7 @@ class Ticker(BaseScraper):
         price_history = self.get_price_history()
         return price_history.date.tolist()
 
+    @catch
     def get_shareholder_data_one_day(self, date):
         url = SHAREHOLDER_URL.format(
             ticker_index=self.ticker_index, date=date.strftime("%Y%m%d")

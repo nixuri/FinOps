@@ -72,9 +72,9 @@ class TehranStockExchange(BaseScraper):
 
     def get_shareholders_data(
         self,
-        tickers_index_list,
         start_date,
         end_date,
+        tickers_index_list,
         store_path,
         log_path,
         n_threads=1,

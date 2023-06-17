@@ -16,7 +16,7 @@ setup(
     license='BSD (3-clause)',
     classifiers=[
         'Development Status :: 4 - Beta',
-        'Intended Audience :: Analysts',
+        'Intended Audience :: Financial and Insurance Industry',
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python :: 3',
     ],

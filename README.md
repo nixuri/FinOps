@@ -7,7 +7,6 @@ FinOps is a python package for financial operations.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
-- [License](#license)
 
 ## Installation
 

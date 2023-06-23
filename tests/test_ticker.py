@@ -7,7 +7,9 @@ from finops.config import (
     SHAREHOLDER_URL,
     PRICE_HISTORY_URL,
     PRICE_HISTORY_DATA_COLUMNS,
-    SHAREHOLDER_DATA_COLUMNS,PRICE_HISTORY_FIELD_MAP, SHAREHOLDER_FIELD_MAP
+    SHAREHOLDER_DATA_COLUMNS,
+    PRICE_HISTORY_FIELD_MAP,
+    SHAREHOLDER_FIELD_MAP,
 )
 
 
@@ -56,9 +58,7 @@ class TestTicker(unittest.TestCase):
             }
         )
 
-        result = self.ticker._preprocess_shareholder_data(
-            parsed_response, date
-        )
+        result = self.ticker._preprocess_shareholder_data(parsed_response, date)
         pd.testing.assert_frame_equal(result, expected_result)
 
     def test_get_price_history(self):
@@ -83,7 +83,7 @@ class TestTicker(unittest.TestCase):
 
     def test_get_shareholder_data_one_day(self):
         date = datetime(2023, 5, 22)
-        result = self.ticker.get_shareholder_data_one_day(date)
+        result = self.ticker._get_shareholder_data_one_day(date)
         expected_result = pd.DataFrame(
             [
                 {

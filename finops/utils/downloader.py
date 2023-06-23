@@ -7,7 +7,7 @@ from .wrappers import lock
 from bs4 import BeautifulSoup
 
 
-class BaseDownloader:
+class Downloader:
     @staticmethod
     def _create_csv_file(path, columns):
         if os.path.isfile(path):

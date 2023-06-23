@@ -1,8 +1,8 @@
 import pandas as pd
-from .base_downloader import BaseDownloader
+from .downloader import Downloader
 
 
-class BaseScraper(BaseDownloader):
+class Scraper(Downloader):
     @staticmethod
     def _filter_scraped_dates(traded_dates, scraped_dates):
         not_scraped_dates = list(set(traded_dates) - set(scraped_dates))

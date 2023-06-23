@@ -11,15 +11,35 @@ from finops.config import (
 )
 from finops.utils.wrappers import catch
 from finops.logger import logger
-from finops.utils.base_scraper import BaseScraper
+from finops.utils.scraper import Scraper
 
 
-class Ticker(BaseScraper):
-    def __init__(self, ticker_index, *args, **kwargs):
+class Ticker(Scraper):
+    def __init__(self, ticker_index: str, *args, **kwargs):
+        """
+        Initialize a Ticker object.
+
+        Args:
+            ticker_index (str): The ticker index.
+
+        """
         super().__init__(*args, **kwargs)
         self.ticker_index = ticker_index
 
-    def _preprocess_shareholder_data(self, parsed_response, date):
+    def _preprocess_shareholder_data(
+        self, parsed_response: dict, date: pd.Timestamp
+    ) -> pd.DataFrame:
+        """
+        Preprocesses the shareholder data.
+
+        Args:
+            parsed_response (dict): The parsed response containing shareholder data.
+            date (pd.Timestamp): The date of the shareholder data.
+
+        Returns:
+            pd.DataFrame: The preprocessed shareholder data.
+
+        """
         preprocessed_response = parsed_response["shareShareholder"]
         if len(preprocessed_response) == 0:
             return pd.DataFrame(columns=SHAREHOLDER_DATA_COLUMNS)
@@ -37,7 +57,17 @@ class Ticker(BaseScraper):
 
         return preprocessed_response
 
-    def get_price_history(self, timeout=None):
+    def get_price_history(self, timeout: float = None) -> pd.DataFrame:
+        """
+        Retrieves the price history for the ticker.
+
+        Args:
+            timeout (float): Timeout value for the download request.
+
+        Returns:
+            pd.DataFrame: The price history data.
+
+        """
         url = PRICE_HISTORY_URL.format(ticker_index=self.ticker_index)
         response = self._download(url, user_agent=USER_AGENT, timeout=timeout)
         parsed_response = self._parse_csv_response(response)
@@ -49,12 +79,29 @@ class Ticker(BaseScraper):
         )
         return ticker_price_history
 
-    def get_traded_dates(self):
+    def get_traded_dates(self) -> list:
+        """
+        Retrieves the traded dates for the ticker.
+
+        Returns:
+            list: List of traded dates.
+
+        """
         price_history = self.get_price_history()
         return price_history.date.tolist()
 
     @catch
-    def get_shareholder_data_one_day(self, date):
+    def _get_shareholder_data_one_day(self, date: pd.Timestamp) -> pd.DataFrame:
+        """
+        Retrieves the shareholder data for a specific date.
+
+        Args:
+            date (pd.Timestamp): The date for which to retrieve the shareholder data.
+
+        Returns:
+            pd.DataFrame: The preprocessed shareholder data.
+
+        """
         url = SHAREHOLDER_URL.format(
             ticker_index=self.ticker_index, date=date.strftime("%Y%m%d")
         )
@@ -63,8 +110,26 @@ class Ticker(BaseScraper):
         return self._preprocess_shareholder_data(parsed_response, date)
 
     def get_shareholder_data(
-        self, start_date, end_date, store_path, log_path, lock=None, verbose=False
+        self,
+        start_date: pd.Timestamp,
+        end_date: pd.Timestamp,
+        store_path: str,
+        log_path: str,
+        lock=None,
+        verbose: bool = False,
     ):
+        """
+        Retrieves and stores the shareholder data for a range of dates.
+
+        Args:
+            start_date (pd.Timestamp): The start date of the date range.
+            end_date (pd.Timestamp): The end date of the date range.
+            store_path (str): The path to store the shareholder data.
+            log_path (str): The path to store the log data.
+            lock (Optional[threading.Lock]): Optional lock for thread safety.
+            verbose (bool): Flag to enable verbose logging.
+
+        """
         log = self._load_or_create_csv(
             log_path, LOG_COLUMNS, parse_dates=["date"], dtype={"ticker_index": str}
         )
@@ -76,7 +141,7 @@ class Ticker(BaseScraper):
             not_scraped_dates, start_date, end_date
         )
         for date in filtered_dates:
-            preprocessed_shareholder_data = self.get_shareholder_data_one_day(date)
+            preprocessed_shareholder_data = self._get_shareholder_data_one_day(date)
             if preprocessed_shareholder_data is not None:
                 if lock is not None:
                     with lock:

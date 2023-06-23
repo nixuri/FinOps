@@ -115,7 +115,6 @@ class Ticker(Scraper):
         end_date: pd.Timestamp,
         store_path: str,
         log_path: str,
-        lock=None,
         verbose: bool = False,
     ):
         """
@@ -126,7 +125,6 @@ class Ticker(Scraper):
             end_date (pd.Timestamp): The end date of the date range.
             store_path (str): The path to store the shareholder data.
             log_path (str): The path to store the log data.
-            lock (Optional[threading.Lock]): Optional lock for thread safety.
             verbose (bool): Flag to enable verbose logging.
 
         """
@@ -143,19 +141,11 @@ class Ticker(Scraper):
         for date in filtered_dates:
             preprocessed_shareholder_data = self._get_shareholder_data_one_day(date)
             if preprocessed_shareholder_data is not None:
-                if lock is not None:
-                    with lock:
-                        self._save_csv(
-                            preprocessed_shareholder_data,
-                            store_path,
-                        )
-                        self._save_log(log_path, self.ticker_index, date)
-                else:
-                    self._save_csv(
-                        preprocessed_shareholder_data,
-                        store_path,
-                    )
-                    self._save_log(log_path, self.ticker_index, date)
+                self._save_csv(
+                    preprocessed_shareholder_data,
+                    store_path,
+                )
+                self._save_log(log_path, self.ticker_index, date)
                 if verbose:
                     logger.info(
                         f"scraped {self.ticker_index} shareholder data for {date}."

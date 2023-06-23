@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as f:
 
 setup(
     name='finops',
-    version='0.1.3',
+    version='0.1.4',
     description='A Python package for financial operations.',
     author='Alireza Nilgaran',
     author_email='alireza.nilgaran@gmail.com',
@@ -27,5 +27,7 @@ setup(
         'requests',
         'beautifulsoup4',
         'datetime',
+        'jdatetime',
+        'selenium',
     ],
 )

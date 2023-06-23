@@ -117,7 +117,6 @@ class TehranStockExchange(Scraper):
         """
         if tickers_index_list is None:
             tickers_index_list = self.get_stock_tickers_index_list()
-        lock = concurrent.futures.Lock()
         with concurrent.futures.ThreadPoolExecutor(max_workers=n_threads) as executor:
             futures = [
                 executor.submit(
@@ -127,7 +126,6 @@ class TehranStockExchange(Scraper):
                     end_date,
                     store_path,
                     log_path,
-                    lock,
                 )
                 for ticker_index in tickers_index_list
             ]

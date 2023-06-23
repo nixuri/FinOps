@@ -3,7 +3,6 @@ import os
 import json
 import requests
 import pandas as pd
-from .wrappers import lock
 from bs4 import BeautifulSoup
 
 

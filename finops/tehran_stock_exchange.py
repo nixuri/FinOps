@@ -51,18 +51,6 @@ class TehranStockExchange(BaseScraper):
         tickers_index_list = stock_tickers_df.ticker_index.tolist()
         return tickers_index_list
 
-    def get_shareholders_data(
-        self,
-        tickers_index_list,
-        start_date,
-        end_date,
-        store_path,
-        log_path,
-        n_threads=1,
-    ):
-        if tickers_index_list is None:
-            tickers_index_list = self.get_stock_tickers_index_list()
-
     def _get_shareholder_data_thread(
         self, ticker_index, start_date, end_date, store_path, log_path
     ):
@@ -81,6 +69,7 @@ class TehranStockExchange(BaseScraper):
     ):
         if tickers_index_list is None:
             tickers_index_list = self.get_stock_tickers_index_list()
+        lock = concurrent.futures.Lock()
         with concurrent.futures.ThreadPoolExecutor(max_workers=n_threads) as executor:
             futures = [
                 executor.submit(
@@ -90,6 +79,7 @@ class TehranStockExchange(BaseScraper):
                     end_date,
                     store_path,
                     log_path,
+                    lock,
                 )
                 for ticker_index in tickers_index_list
             ]

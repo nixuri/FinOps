@@ -63,7 +63,7 @@ class Ticker(BaseScraper):
         return self._preprocess_shareholder_data(parsed_response, date)
 
     def get_shareholder_data(
-        self, start_date, end_date, store_path, log_path, verbose=False
+        self, start_date, end_date, store_path, log_path, lock=None, verbose=False
     ):
         log = self._load_or_create_csv(
             log_path, LOG_COLUMNS, parse_dates=["date"], dtype={"ticker_index": str}
@@ -78,11 +78,19 @@ class Ticker(BaseScraper):
         for date in filtered_dates:
             preprocessed_shareholder_data = self.get_shareholder_data_one_day(date)
             if preprocessed_shareholder_data is not None:
-                self._save_csv(
-                    preprocessed_shareholder_data,
-                    store_path,
-                )
-                self._save_log(log_path, self.ticker_index, date)
+                if lock is not None:
+                    with lock:
+                        self._save_csv(
+                            preprocessed_shareholder_data,
+                            store_path,
+                        )
+                        self._save_log(log_path, self.ticker_index, date)
+                else:
+                    self._save_csv(
+                        preprocessed_shareholder_data,
+                        store_path,
+                    )
+                    self._save_log(log_path, self.ticker_index, date)
                 if verbose:
                     logger.info(
                         f"scraped {self.ticker_index} shareholder data for {date}."

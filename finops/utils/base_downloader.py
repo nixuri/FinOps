@@ -49,6 +49,5 @@ class BaseDownloader:
         return pd.read_csv(path, **kwargs)
 
     @staticmethod
-    @lock
     def _save_csv(data, path):
         data.to_csv(path, index=False, mode="a", header=False)

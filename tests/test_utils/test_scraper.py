@@ -50,6 +50,6 @@ class TestBaseScraper(unittest.TestCase):
 
     def test_get_ticker_scraped_dates(self):
         ticker_index = 0
-        scraped_dates = Scraper._get_ticker_scraped_dates(self.log, ticker_index)
+        scraped_dates = Scraper._get_scraped_dates(self.log, ticker_index)
         expected_dates = [date(2022, 1, 1), date(2022, 1, 2), date(2022, 1, 3)]
         self.assertListEqual(list(scraped_dates), expected_dates)

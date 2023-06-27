@@ -4,6 +4,7 @@ import json
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
+from finops.config import USER_AGENT
 
 
 class Downloader:
@@ -22,7 +23,7 @@ class Downloader:
             pd.DataFrame(columns=columns).to_csv(path, index=False)
 
     @staticmethod
-    def _download(url, user_agent, timeout=None):
+    def _download(url, user_agent=USER_AGENT, timeout=None):
         response = requests.get(
             url,
             headers={"user-agent": user_agent},
@@ -42,6 +43,10 @@ class Downloader:
     @staticmethod
     def _parse_html_response(response):
         return BeautifulSoup(response.text, "html.parser")
+    
+    @staticmethod
+    def _load_csv(path, **kwargs):
+        return pd.read_csv(path, **kwargs)
 
     def _load_or_create_csv(self, path, columns, **kwargs):
         self._create_csv_file(path, columns=columns)

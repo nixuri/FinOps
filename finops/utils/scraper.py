@@ -4,8 +4,8 @@ from .downloader import Downloader
 
 class Scraper(Downloader):
     @staticmethod
-    def _filter_scraped_dates(traded_dates, scraped_dates):
-        not_scraped_dates = list(set(traded_dates) - set(scraped_dates))
+    def _filter_scraped_dates(dates, scraped_dates):
+        not_scraped_dates = list(set(dates) - set(scraped_dates))
         return not_scraped_dates
 
     @staticmethod
@@ -14,9 +14,14 @@ class Scraper(Downloader):
         return filtered_dates
 
     @staticmethod
-    def _get_ticker_scraped_dates(log, ticker_index):
-        return log.loc[log.ticker_index == ticker_index, "date"].tolist()
+    def _get_scraped_dates(log, id, date_column="date"):
+        return log.loc[log.id == id, date_column].tolist()
+    
+    @staticmethod
+    def _get_scraped_ids(log, id_column="id"):
+        return log[id_column].tolist()
 
-    def _save_log(self, log_path, ticker_index, date):
-        log = pd.DataFrame([{"ticker_index": ticker_index, "date": date}])
+    @staticmethod
+    def _save_log(log_path, **logargs):
+        log = pd.DataFrame([logargs])
         self._save_csv(log, log_path)

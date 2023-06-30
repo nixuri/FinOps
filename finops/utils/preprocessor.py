@@ -189,6 +189,8 @@ class Preprocessor:
 
     def _preprocess_cash_flow_df(self, df):
         df = df.applymap(self._preprocess_codal_text)
+        if len(df.columns) == 12:
+            df = df.iloc[:, 1:3]
         df = df.iloc[:, :2]
         df = df.dropna(how="any")
         df.columns = ["title", "value"]

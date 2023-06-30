@@ -27,9 +27,8 @@ from finops.logger import logger
 
 
 class Codal(Scraper, Preprocessor):
-    def __init__(self, search_params, store_path, driver_path="selenium/chromedriver"):
+    def __init__(self, store_path, driver_path="selenium/chromedriver"):
         self.driver = self._initialize_driver(driver_path)
-        self.search_params = search_params
         self.balance_sheets_path = os.path.join(store_path, "balance_sheets.csv")
         self.pnl_path = os.path.join(store_path, "pnl.csv")
         self.cash_flow_path = os.path.join(store_path, "cash_flow.csv")
@@ -52,8 +51,8 @@ class Codal(Scraper, Preprocessor):
         url += "&".join([f"{key}={value}" for key, value in kwargs.items()])
         return url
 
-    def _get_letters_list_pages_number(self):
-        search_url = self._create_search_url(**self.search_params)
+    def _get_letters_list_pages_number(self, search_params):
+        search_url = self._create_search_url(**search_params)
         response = self._download(search_url)
         parsed_response = self._parse_json_response(response)
         n_pages = parsed_response["Page"]
@@ -61,8 +60,7 @@ class Codal(Scraper, Preprocessor):
 
     @sleep
     @retry(max_retries=3, wait_time=1)
-    def _scrap_letters_list_one_page(self, page_number):
-        search_params = self.search_params.copy()
+    def _scrap_letters_list_one_page(self, search_params, page_number):
         search_params["PageNumber"] = page_number
         search_url = self._create_search_url(**search_params)
         response = self._download(search_url)
@@ -70,12 +68,18 @@ class Codal(Scraper, Preprocessor):
         letters_list_df = self._preprocess_letters_list(parsed_response)
         return letters_list_df
 
-    def scrap_letters_list(self, start_page_number=None, stocks=None, verbose=True):
-        letters_list = self._load_or_create_csv(self.letters_list_path, CODAL_LETTERS_LIST_COLUMNS)
+    def scrap_letters_list(
+        self, search_params, start_page_number=None, stocks=None, verbose=True
+    ):
+        letters_list = self._load_or_create_csv(
+            self.letters_list_path, CODAL_LETTERS_LIST_COLUMNS
+        )
         scraped_letters = self._get_scraped_ids(letters_list, "tracing_id")
-        n_pages = self._get_letters_list_pages_number()
-        for page_number in range(start_page_number or 1 , n_pages + 1):
-            letters_list_one_page = self._scrap_letters_list_one_page(page_number)
+        n_pages = self._get_letters_list_pages_number(search_params)
+        for page_number in range(start_page_number or 1, n_pages + 1):
+            letters_list_one_page = self._scrap_letters_list_one_page(
+                search_params, page_number
+            )
             if stocks is not None:
                 letters_list_one_page = letters_list_one_page[
                     letters_list_one_page.symbol.isin(stocks)
@@ -112,7 +116,6 @@ class Codal(Scraper, Preprocessor):
         is_scrap_pnl_sheets=True,
         is_scrap_cash_flow=True,
     ):
-        
         balance_sheets = self._load_or_create_csv(
             self.balance_sheets_path, BALANCE_SHEET_COLUMNS + CODAL_BASIC_INFO_COLUMNS
         )
@@ -155,7 +158,9 @@ class Codal(Scraper, Preprocessor):
                 if is_scrap_cash_flow:
                     if row["tracing_id"] not in cash_flow_sheets.tracing_id.values:
                         letter_df = self._preprocess_cash_flow_df(
-                            self._scrap_letter(row["url"] + f"&sheetId={CASH_FLOW_SHEET_ID}")
+                            self._scrap_letter(
+                                row["url"] + f"&sheetId={CASH_FLOW_SHEET_ID}"
+                            )
                         )
                         self._add_basic_letter_info(letter_df, row)
                         self._save_csv(letter_df, self.cash_flow_path)

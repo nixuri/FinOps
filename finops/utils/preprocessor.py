@@ -12,10 +12,15 @@ from finops.config import (
     SHAREHOLDER_FIELD_MAP,
     BALANCE_SHEET_COLUMNS,
     PNL_SHEET_COLUMNS,
+<<<<<<< HEAD
     CASH_FLOW_SHEET_COLUMNS,
     BALANCE_SHEET_FIX_MISTAKE_MAP,
     PNL_SHEET_FIX_MISTAKE_MAP,
     CASH_FLOW_FIX_MISTAKE_MAP,
+=======
+    BALANCE_SHEET_FIX_MISTAKE_MAP,
+    PNL_SHEET_FIX_MISTAKE_MAP,
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
 )
 
 
@@ -46,9 +51,13 @@ class Preprocessor:
             if cells:
                 ticker_url = cells[0].find("a")["href"]
                 data = {
+<<<<<<< HEAD
                     "name": self._preprocess_ticker_name(
                         re.findall(r"\(([^()]+)\)", cells[0].text.strip())[0]
                     ),
+=======
+                    "name": self._preprocess_ticker_name(re.findall(r"\(([^()]+)\)", cells[0].text.strip())[0]),
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
                     "full_name": cells[0].text.strip().split("(")[0],
                     "ticker_index": re.findall(r"(\d+)", ticker_url)[-1],
                     "instrument_isin": cells[1].text.strip(),
@@ -87,7 +96,11 @@ class Preprocessor:
             .assign(date=lambda df: pd.to_datetime(df["date"], format="%Y%m%d"))
         )
         return preprocessed_price_history
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
     @staticmethod
     def _preprocess_persian_text(text):
         if text is None:
@@ -95,7 +108,10 @@ class Preprocessor:
 
         text = text.replace("ي", "ی")
         text = text.replace("ك", "ک")
+<<<<<<< HEAD
         text = text.replace("أ", "ا")
+=======
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
 
         digits_mapping = {
             "۰": "0",
@@ -112,7 +128,11 @@ class Preprocessor:
         for digit, replacement in digits_mapping.items():
             text = text.replace(digit, replacement)
         return text
+<<<<<<< HEAD
 
+=======
+    
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
     def _preprocess_ticker_name(self, ticker_name):
         ticker_name = self._preprocess_persian_text(ticker_name)
         if ticker_name is None:
@@ -144,7 +164,11 @@ class Preprocessor:
             try:
                 selected_columns.append(df.loc[:, column])
             except KeyError:
+<<<<<<< HEAD
                 selected_columns.append(pd.Series(dtype="object", name=column))
+=======
+                selected_columns.append(pd.Series(dtype='object', name=column))
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
         return pd.concat(selected_columns, axis=1)
 
     def _preprocess_balance_sheet_df(self, df):
@@ -187,6 +211,7 @@ class Preprocessor:
         df = self.safe_select_columns(df, PNL_SHEET_COLUMNS)
         return df
 
+<<<<<<< HEAD
     def _preprocess_cash_flow_df(self, df):
         df = df.applymap(_preprocess_codal_text)
         df = df.iloc[:, :2]
@@ -199,6 +224,8 @@ class Preprocessor:
         df = self.safe_select_columns(df, CASH_FLOW_SHEET_COLUMNS)
         return df
 
+=======
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
     @staticmethod
     def _preprocess_letters_list(parsed_response):
         letters = parsed_response["Letters"]
@@ -221,6 +248,7 @@ class Preprocessor:
         letter_df["symbol"] = info["symbol"]
         letter_df["is_audited"] = "حسابرسی شده" in info["letter_title"]
         letter_df["is_correction"] = "اصلاحیه" in info["letter_title"]
+<<<<<<< HEAD
         letter_df["is_consolidated"] = "تلفیقی" in info["letter_title"]
         letter_df["period_type"] = re.search(
             r"(سال مالی|میاندوره‌ای)", info["letter_title"]
@@ -228,6 +256,8 @@ class Preprocessor:
         letter_df["period_length"] = re.search(
             r"\d+(?= ماهه)", info["letter_title"]
         ).group()
+=======
+>>>>>>> 8ed130cf3b771708dbabf553062943355102ea3f
         letter_df["period_end_date"] = (
             jdatetime.datetime.strptime(
                 re.search(r"\d{4}/\d{2}/\d{2}", info["letter_title"]).group(),

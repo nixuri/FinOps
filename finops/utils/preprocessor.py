@@ -188,7 +188,7 @@ class Preprocessor:
         return df
 
     def _preprocess_cash_flow_df(self, df):
-        df = df.applymap(_preprocess_codal_text)
+        df = df.applymap(self._preprocess_codal_text)
         df = df.iloc[:, :2]
         df = df.dropna(how="any")
         df.columns = ["title", "value"]
@@ -225,9 +225,12 @@ class Preprocessor:
         letter_df["period_type"] = re.search(
             r"(سال مالی|میاندوره‌ای)", info["letter_title"]
         ).group()
-        letter_df["period_length"] = re.search(
-            r"\d+(?= ماهه)", info["letter_title"]
-        ).group()
+
+        letter_df["period_length"] = (
+            re.search(r"\d+(?= ماهه)", info["letter_title"]).group()
+            if re.search(r"\d+(?= ماهه)", info["letter_title"])
+            else None
+        )
         letter_df["period_end_date"] = (
             jdatetime.datetime.strptime(
                 re.search(r"\d{4}/\d{2}/\d{2}", info["letter_title"]).group(),

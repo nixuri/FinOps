@@ -31,7 +31,7 @@ from finops.logger import logger
 class Codal(Scraper, Preprocessor):
     def __init__(self, store_path, driver_path="selenium/chromedriver"):
         self.driver_path = driver_path
-        self.balance_sheets_path = os.path.join(store_path, "balance_sheets.csv")
+        self.balance_sheets_path = os.path.join(store_path, "balance_sheet.csv")
         self.pnl_path = os.path.join(store_path, "pnl.csv")
         self.cash_flow_path = os.path.join(store_path, "cash_flow.csv")
         self.letters_list_path = os.path.join(store_path, "letters_list.csv")

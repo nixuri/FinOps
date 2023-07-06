@@ -149,6 +149,8 @@ class Preprocessor:
 
     def _preprocess_balance_sheet_df(self, df):
         df = df.applymap(self._preprocess_codal_text)
+        if len(df.columns) == 56:
+            df = df.iloc[:, 6:8]
         if len(df.columns) == 24:
             df = df.iloc[:, 3:5]
         if len(df.columns) == 18:

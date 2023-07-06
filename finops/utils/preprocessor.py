@@ -157,6 +157,11 @@ class Preprocessor:
             df = df.iloc[:, 1:3]
         if len(df.columns) == 10:
             df = df.drop(columns=[0, 5])
+        if len(df.columns) == 16:
+            section1 = df.iloc[:, 1:3]
+            section2 = df.iloc[:, 9:11]
+            section2.columns = section1.columns
+            df = pd.concat([section1, section2], axis=0, ignore_index=True)
         if len(df.columns) < 5:
             df = df.iloc[:, :2]
         else:

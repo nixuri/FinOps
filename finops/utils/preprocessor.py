@@ -223,21 +223,22 @@ class Preprocessor:
         letters_list_df = pd.DataFrame(letters_list)
         return letters_list_df
 
-    @staticmethod
-    def _add_basic_letter_info(letter_df, info):
+    def _add_basic_letter_info(self, letter_df, info):
         letter_df["tracing_id"] = info["tracing_id"]
         letter_df["symbol"] = info["symbol"]
         letter_df["is_audited"] = "حسابرسی شده" in info["letter_title"]
         letter_df["is_correction"] = "اصلاحیه" in info["letter_title"]
         letter_df["is_consolidated"] = "تلفیقی" in info["letter_title"]
-        letter_df["period_type"] = re.search(
-            r"(سال مالی|میاندوره‌ای)", info["letter_title"]
-        ).group()
-
+        period_type = re.search(r"(سال مالی|میاندوره‌ای)", info["letter_title"]).group()
+        letter_df["period_type"] = "annual" if period_type == "سال مالی" else "interim"
         letter_df["period_length"] = (
-            re.search(r"\d+(?= ماهه)", info["letter_title"]).group()
+            int(
+                self._preprocess_persian_text(
+                    re.search(r"\d+(?= ماهه)", info["letter_title"]).group()
+                )
+            )
             if re.search(r"\d+(?= ماهه)", info["letter_title"])
-            else None
+            else 12
         )
         letter_df["period_end_date"] = (
             jdatetime.datetime.strptime(

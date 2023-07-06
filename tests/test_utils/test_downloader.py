@@ -7,7 +7,7 @@ from io import StringIO
 from finops.utils.downloader import Downloader
 
 
-class TestBaseDownloader(unittest.TestCase):
+class TestDownloader(unittest.TestCase):
     def setUp(self):
         self.columns = ["col1", "col2", "col3"]
         self.path = "test.csv"

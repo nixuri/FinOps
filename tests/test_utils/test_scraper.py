@@ -4,7 +4,7 @@ from datetime import date
 from finops.utils.scraper import Scraper
 
 
-class TestBaseScraper(unittest.TestCase):
+class TestScraper(unittest.TestCase):
     def setUp(self):
         self.traded_dates = [
             date(2022, 1, 1),

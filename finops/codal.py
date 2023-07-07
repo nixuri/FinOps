@@ -22,7 +22,6 @@ from finops.config import (
     CASH_FLOW_SHEET_ID,
     BALANCE_SHEET_COLUMNS,
     PNL_SHEET_COLUMNS,
-    CODAL_BASIC_INFO_COLUMNS,
     CASH_FLOW_SHEET_COLUMNS,
 )
 from finops.logger import logger
@@ -71,14 +70,20 @@ class Codal(Scraper, Preprocessor):
         return letters_list_df
 
     def scrap_letters_list(
-        self, search_params, start_page_number=None, stocks=None, verbose=True
+        self,
+        search_params,
+        start_page_number=None,
+        stocks=None,
+        n_threads=1,
+        verbose=True,
     ):
         letters_list = self._load_or_create_csv(
             self.letters_list_path, CODAL_LETTERS_LIST_COLUMNS
         )
         scraped_letters = self._get_scraped_ids(letters_list, "tracing_id")
         n_pages = self._get_letters_list_pages_number(search_params)
-        for page_number in range(start_page_number or 1, n_pages + 1):
+
+        def scrap_page(page_number):
             letters_list_one_page = self._scrap_letters_list_one_page(
                 search_params, page_number
             )
@@ -93,6 +98,9 @@ class Codal(Scraper, Preprocessor):
             time.sleep(1)
             if verbose:
                 logger.info(f"Page {page_number} of {n_pages} is scrapped.")
+
+        with concurrent.futures.ThreadPoolExecutor(max_workers=n_threads) as executor:
+            executor.map(scrap_page, range(start_page_number or 1, n_pages + 1))
 
     @retry(max_retries=3, wait_time=1)
     def _scrap_letter(self, driver, letter_url):
@@ -110,6 +118,19 @@ class Codal(Scraper, Preprocessor):
             letter.append([cell.text for cell in row.find_all("td")])
         return pd.DataFrame(letter)
 
+    def _scrap_sheet(
+        self, driver, url, sheet_id, tracing_id, sheet_df, preprocess_func, path
+    ):
+        if tracing_id not in sheet_df.tracing_id.values:
+            try:
+                sheet_url = url + f"&sheetId={sheet_id}"
+                letter_df = preprocess_func(self._scrap_letter(driver, sheet_url))
+                letter_df["tracing_id"] = tracing_id
+                self._save_csv(letter_df, path)
+            except Exception as e:
+                print(e)
+                print(sheet_url)
+
     def _scrap_letter_wrapper(
         self,
         drivers,
@@ -125,44 +146,38 @@ class Codal(Scraper, Preprocessor):
         tracing_id = row["tracing_id"]
         driver = drivers.get()
 
-        if (
-            is_scrap_balance_sheets
-            and tracing_id not in balance_sheets.tracing_id.values
-        ):
-            try:
-                balance_sheet_url = url + f"&sheetId={BALANCE_SHEET_ID}"
-                letter_df = self._preprocess_balance_sheet_df(
-                    self._scrap_letter(driver, balance_sheet_url)
-                )
-                self._add_basic_letter_info(letter_df, row)
-                self._save_csv(letter_df, self.balance_sheets_path)
-            except Exception as e:
-                print(e)
-                print(balance_sheet_url)
+        if is_scrap_balance_sheets:
+            self._scrap_sheet(
+                driver,
+                url,
+                BALANCE_SHEET_ID,
+                tracing_id,
+                balance_sheets,
+                self._preprocess_balance_sheet_df,
+                self.balance_sheets_path,
+            )
 
-        if is_scrap_pnl_sheets and tracing_id not in pnl_sheets.tracing_id.values:
-            try:
-                pnl_sheet_url = url + f"&sheetId={PNL_SHEET_ID}"
-                letter_df = self._preprocess_pnl_df(
-                    self._scrap_letter(driver, pnl_sheet_url)
-                )
-                self._add_basic_letter_info(letter_df, row)
-                self._save_csv(letter_df, self.pnl_path)
-            except Exception as e:
-                print(e)
-                print(pnl_sheet_url)
+        if is_scrap_pnl_sheets:
+            self._scrap_sheet(
+                driver,
+                url,
+                PNL_SHEET_ID,
+                tracing_id,
+                pnl_sheets,
+                self._preprocess_pnl_df,
+                self.pnl_path,
+            )
 
-        if is_scrap_cash_flow and tracing_id not in cash_flow_sheets.tracing_id.values:
-            try:
-                cash_flow_url = url + f"&sheetId={CASH_FLOW_SHEET_ID}"
-                letter_df = self._preprocess_cash_flow_df(
-                    self._scrap_letter(driver, cash_flow_url)
-                )
-                self._add_basic_letter_info(letter_df, row)
-                self._save_csv(letter_df, self.cash_flow_path)
-            except Exception as e:
-                print(e)
-                print(cash_flow_url)
+        if is_scrap_cash_flow:
+            self._scrap_sheet(
+                driver,
+                url,
+                CASH_FLOW_SHEET_ID,
+                tracing_id,
+                cash_flow_sheets,
+                self._preprocess_cash_flow_df,
+                self.cash_flow_path,
+            )
 
         drivers.put(driver)
 
@@ -174,13 +189,11 @@ class Codal(Scraper, Preprocessor):
         n_threads=5,
     ):
         balance_sheets = self._load_or_create_csv(
-            self.balance_sheets_path, BALANCE_SHEET_COLUMNS + CODAL_BASIC_INFO_COLUMNS
+            self.balance_sheets_path, BALANCE_SHEET_COLUMNS
         )
-        pnl_sheets = self._load_or_create_csv(
-            self.pnl_path, PNL_SHEET_COLUMNS + CODAL_BASIC_INFO_COLUMNS
-        )
+        pnl_sheets = self._load_or_create_csv(self.pnl_path, PNL_SHEET_COLUMNS)
         cash_flow_sheets = self._load_or_create_csv(
-            self.cash_flow_path, CASH_FLOW_SHEET_COLUMNS + CODAL_BASIC_INFO_COLUMNS
+            self.cash_flow_path, CASH_FLOW_SHEET_COLUMNS
         )
         letters_list = self._load_csv(self.letters_list_path)
 

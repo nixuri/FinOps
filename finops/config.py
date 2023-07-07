@@ -23,6 +23,7 @@ PRICE_HISTORY_DATA_COLUMNS = [
     "open",
     "last",
 ]
+
 SHAREHOLDER_DATA_COLUMNS = [
     "shareholder_id",
     "shareholder_name",
@@ -33,12 +34,20 @@ SHAREHOLDER_DATA_COLUMNS = [
     "ticker_index",
     "req_date",
 ]
+
 CODAL_LETTERS_LIST_COLUMNS = [
     "tracing_id",
     "symbol",
     "letter_title",
+    "is_audited",
+    "is_correction",
+    "is_consolidated",
+    "period_type",
+    "period_length",
+    "period_end_date",
     "url",
 ]
+
 PNL_SHEET_COLUMNS = [
     "gross_profit",
     "operating_profit",
@@ -47,7 +56,9 @@ PNL_SHEET_COLUMNS = [
     "basic_earnings_per_share",
     "net_earnings_per_share",
     "capital",
+    "tracing_id",
 ]
+
 BALANCE_SHEET_COLUMNS = [
     "total_current_assets",
     "total_noncurrent_assets",
@@ -57,6 +68,7 @@ BALANCE_SHEET_COLUMNS = [
     "total_liabilities",
     "total_equity",
     "total_liabilities_and_equity",
+    "tracing_id",
 ]
 
 CASH_FLOW_SHEET_COLUMNS = [
@@ -68,18 +80,9 @@ CASH_FLOW_SHEET_COLUMNS = [
     "cash_balance_end_year",
     "effect_exchange_rate_changes",
     "non_cash_transactions",
+    "tracing_id",
 ]
 
-CODAL_BASIC_INFO_COLUMNS = [
-    "tracing_id",
-    "symbol",
-    "is_audited",
-    "is_correction",
-    "is_consolidated",
-    "period_type",
-    "period_length",
-    "period_end_date",
-]
 LOG_COLUMNS = [
     "id",
     "date",

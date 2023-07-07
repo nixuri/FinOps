@@ -215,45 +215,54 @@ class Preprocessor:
         return df
 
     @staticmethod
-    def _preprocess_letters_list(parsed_response):
+    def _extract_period_type(letter_title):
+        period_type = re.search(r"(سال مالی|میاندوره‌ای|میاندوره ای)", letter_title)
+        if period_type is None:
+            return None
+        else:
+            period_type = "annual" if period_type.group() == "سال مالی" else "interim"
+        return period_type
+
+    def _extract_period_length(self, letter_title):
+        period_length = re.search(r"\d+(?= ماهه)", letter_title)
+        if period_length is None:
+            return None
+        else:
+            period_length = int(self._preprocess_persian_text(period_length.group()))
+        return period_length
+
+    @staticmethod
+    def _extract_period_end_date(letter_title):
+        period_end_date = re.search(r"\d{4}/\d{2}/\d{2}", letter_title)
+        if period_end_date is None:
+            return None
+        else:
+            period_end_date = (
+                jdatetime.datetime.strptime(
+                    period_end_date.group(),
+                    "%Y/%m/%d",
+                )
+                .date()
+                .togregorian()
+            )
+        return period_end_date
+
+    def _preprocess_letters_list(self, parsed_response):
         letters = parsed_response["Letters"]
         letters_list = []
         for letter in letters:
-            letters_list.append(
-                {
-                    "tracing_id": letter["TracingNo"],
-                    "symbol": letter["Symbol"],
-                    "letter_title": letter["Title"],
-                    "url": "https://www.codal.ir" + letter["Url"],
-                }
-            )
+            preprocessed_letter_info = {
+                "tracing_id": letter["TracingNo"],
+                "symbol": letter["Symbol"],
+                "letter_title": letter["Title"],
+                "is_audited": "حسابرسی شده" in letter["Title"],
+                "is_correction": "اصلاحیه" in letter["Title"],
+                "is_consolidated": "تلفیقی" in letter["Title"],
+                "period_type": self._extract_period_type(letter["Title"]),
+                "period_length": self._extract_period_length(letter["Title"]),
+                "period_end_date": self._extract_period_end_date(letter["Title"]),
+                "url": "https://www.codal.ir" + letter["Url"],
+            }
+            letters_list.append(preprocessed_letter_info)
         letters_list_df = pd.DataFrame(letters_list)
         return letters_list_df
-
-    def _add_basic_letter_info(self, letter_df, info):
-        letter_df["tracing_id"] = info["tracing_id"]
-        letter_df["symbol"] = info["symbol"]
-        letter_df["is_audited"] = "حسابرسی شده" in info["letter_title"]
-        letter_df["is_correction"] = "اصلاحیه" in info["letter_title"]
-        letter_df["is_consolidated"] = "تلفیقی" in info["letter_title"]
-        period_type = re.search(r"(سال مالی|میاندوره‌ای|میاندوره ای)", info["letter_title"])
-        if period_type is not None:
-            letter_df["period_type"] = "annual" if period_type.group() == "سال مالی" else "interim"
-        letter_df["period_length"] = (
-            int(
-                self._preprocess_persian_text(
-                    re.search(r"\d+(?= ماهه)", info["letter_title"]).group()
-                )
-            )
-            if re.search(r"\d+(?= ماهه)", info["letter_title"])
-            else 12
-        )
-        letter_df["period_end_date"] = (
-            jdatetime.datetime.strptime(
-                re.search(r"\d{4}/\d{2}/\d{2}", info["letter_title"]).group(),
-                "%Y/%m/%d",
-            )
-            .date()
-            .togregorian()
-        )
-        return letter_df

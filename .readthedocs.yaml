@@ -11,6 +11,7 @@ build:
   tools:
     python: "3.11"
     commands:
+        - cd docs
     		- make html
         - mkdir --parents _readthedocs/html/
     		- cp --recursive docs/build/* _readthedocs/html/

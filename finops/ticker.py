@@ -20,9 +20,8 @@ class Ticker(Scraper, Preprocessor):
         """
         Initialize a Ticker object.
 
-        Args:
-            ticker_index (str): The ticker index.
-
+        :param ticker_index: The ticker index.
+        :type ticker_index: str
         """
         super().__init__(*args, **kwargs)
         self.ticker_index = ticker_index
@@ -31,12 +30,10 @@ class Ticker(Scraper, Preprocessor):
         """
         Retrieves the price history for the ticker.
 
-        Args:
-            timeout (float): Timeout value for the download request.
-
-        Returns:
-            pd.DataFrame: The price history data.
-
+        :param timeout: Timeout value for the download request.
+        :type timeout: float
+        :return: The price history data.
+        :rtype: pd.DataFrame
         """
         url = PRICE_HISTORY_URL.format(ticker_index=self.ticker_index)
         response = self._download(url, user_agent=USER_AGENT, timeout=timeout)
@@ -50,9 +47,8 @@ class Ticker(Scraper, Preprocessor):
         """
         Retrieves the traded dates for the ticker.
 
-        Returns:
-            list: List of traded dates.
-
+        :return: List of traded dates.
+        :rtype: list
         """
         price_history = self.get_price_history()
         return price_history.date.tolist()
@@ -62,12 +58,10 @@ class Ticker(Scraper, Preprocessor):
         """
         Retrieves the shareholder data for a specific date.
 
-        Args:
-            date (pd.Timestamp): The date for which to retrieve the shareholder data.
-
-        Returns:
-            pd.DataFrame: The preprocessed shareholder data.
-
+        :param date: The date for which to retrieve the shareholder data.
+        :type date: pd.Timestamp
+        :return: The preprocessed shareholder data.
+        :rtype: pd.DataFrame
         """
         url = SHAREHOLDER_URL.format(
             ticker_index=self.ticker_index, date=date.strftime("%Y%m%d")
@@ -90,13 +84,16 @@ class Ticker(Scraper, Preprocessor):
         """
         Retrieves and stores the shareholder data for a range of dates.
 
-        Args:
-            start_date (pd.Timestamp): The start date of the date range.
-            end_date (pd.Timestamp): The end date of the date range.
-            store_path (str): The path to store the shareholder data.
-            log_path (str): The path to store the log data.
-            verbose (bool): Flag to enable verbose logging.
-
+        :param start_date: The start date of the date range.
+        :type start_date: pd.Timestamp
+        :param end_date: The end date of the date range.
+        :type end_date: pd.Timestamp
+        :param store_path: The path to store the shareholder data.
+        :type store_path: str
+        :param log_path: The path to store the log data.
+        :type log_path: str
+        :param verbose: Flag to enable verbose logging.
+        :type verbose: bool
         """
         log = self._load_or_create_csv(
             log_path, LOG_COLUMNS, parse_dates=["date"], dtype={"id": str}

@@ -29,6 +29,14 @@ from finops.logger import logger
 
 class Codal(Scraper, Preprocessor):
     def __init__(self, store_path, driver_path="selenium/chromedriver"):
+        """
+        Initialize a Codal object.
+
+        :param store_path: The path to store the files.
+        :type store_path: str
+        :param driver_path: The path to the ChromeDriver executable.
+        :type driver_path: str
+        """
         self.driver_path = driver_path
         self.balance_sheets_path = os.path.join(store_path, "balance_sheet.csv")
         self.pnl_path = os.path.join(store_path, "pnl.csv")
@@ -36,6 +44,14 @@ class Codal(Scraper, Preprocessor):
         self.letters_list_path = os.path.join(store_path, "letters_list.csv")
 
     def _create_driver(self, driver_path):
+        """
+        Create a ChromeDriver instance.
+
+        :param driver_path: The path to the ChromeDriver executable.
+        :type driver_path: str
+        :return: The ChromeDriver instance.
+        :rtype: webdriver.Chrome
+        """
         service = Service(driver_path)
         options = webdriver.ChromeOptions()
         options.add_argument("--disable-extensions")
@@ -48,11 +64,27 @@ class Codal(Scraper, Preprocessor):
         return driver
 
     def _create_search_url(self, **kwargs):
+        """
+        Create a URL for searching letters.
+
+        :param kwargs: The search parameters.
+        :type kwargs: dict
+        :return: The search URL.
+        :rtype: str
+        """
         url = CODAL_SEARCH_BASE_URL
         url += "&".join([f"{key}={value}" for key, value in kwargs.items()])
         return url
 
     def _get_letters_list_pages_number(self, search_params):
+        """
+        Get the number of pages in the letters list.
+
+        :param search_params: The search parameters.
+        :type search_params: dict
+        :return: The number of pages.
+        :rtype: int
+        """
         search_url = self._create_search_url(**search_params)
         response = self._download(search_url)
         parsed_response = self._parse_json_response(response)
@@ -62,6 +94,16 @@ class Codal(Scraper, Preprocessor):
     @sleep
     @retry(max_retries=3, wait_time=1)
     def _scrap_letters_list_one_page(self, search_params, page_number):
+        """
+        Scrape the letters list for a specific page.
+
+        :param search_params: The search parameters.
+        :type search_params: dict
+        :param page_number: The page number.
+        :type page_number: int
+        :return: The letters list data.
+        :rtype: pd.DataFrame
+        """
         search_params["PageNumber"] = page_number
         search_url = self._create_search_url(**search_params)
         response = self._download(search_url)
@@ -77,6 +119,20 @@ class Codal(Scraper, Preprocessor):
         n_threads=1,
         verbose=True,
     ):
+        """
+        Scrape the letters list.
+
+        :param search_params: The search parameters.
+        :type search_params: dict
+        :param start_page_number: The starting page number (optional).
+        :type start_page_number: int, optional
+        :param stocks: List of stocks to filter (optional).
+        :type stocks: list, optional
+        :param n_threads: The number of threads to use for concurrent execution.
+        :type n_threads: int
+        :param verbose: Flag to enable verbose logging.
+        :type verbose: bool
+        """
         letters_list = self._load_or_create_csv(
             self.letters_list_path, CODAL_LETTERS_LIST_COLUMNS
         )
@@ -104,6 +160,16 @@ class Codal(Scraper, Preprocessor):
 
     @retry(max_retries=3, wait_time=1)
     def _scrap_letter(self, driver, letter_url):
+        """
+        Scrape a letter from its URL.
+
+        :param driver: The ChromeDriver instance.
+        :type driver: webdriver.Chrome
+        :param letter_url: The URL of the letter.
+        :type letter_url: str
+        :return: The scraped letter data.
+        :rtype: pd.DataFrame
+        """
         driver.get(letter_url)
         response = WebDriverWait(driver, 10, 1).until(
             EC.presence_of_element_located(
@@ -121,6 +187,24 @@ class Codal(Scraper, Preprocessor):
     def _scrap_sheet(
         self, driver, url, sheet_id, tracing_id, sheet_df, preprocess_func, path
     ):
+        """
+        Scrape a specific sheet from a letter.
+
+        :param driver: The ChromeDriver instance.
+        :type driver: webdriver.Chrome
+        :param url: The URL of the letter.
+        :type url: str
+        :param sheet_id: The ID of the sheet to scrape.
+        :type sheet_id: str
+        :param tracing_id:The tracing ID of the letter.
+        :type tracing_id: str
+        :param sheet_df: The DataFrame to store the sheet data.
+        :type sheet_df: pd.DataFrame
+        :param preprocess_func: The preprocessing function for the sheet data.
+        :type preprocess_func: function
+        :param path: The path to store the sheet data.
+        :type path: str
+        """
         if tracing_id not in sheet_df.tracing_id.values:
             try:
                 sheet_url = url + f"&sheetId={sheet_id}"
@@ -142,6 +226,26 @@ class Codal(Scraper, Preprocessor):
         pnl_sheets,
         cash_flow_sheets,
     ):
+        """
+        Wrapper method to scrape a letter.
+
+        :param drivers: The queue of ChromeDriver instances.
+        :type drivers: queue.Queue
+        :param row: The row of the letters list.
+        :type row: pd.Series
+        :param is_scrap_balance_sheets: Flag to scrape balance sheets.
+        :type is_scrap_balance_sheets: bool
+        :param is_scrap_pnl_sheets: Flag to scrape P&L sheets.
+        :type is_scrap_pnl_sheets: bool
+        :param is_scrap_cash_flow: Flag to scrape cash flow statements.
+        :type is_scrap_cash_flow: bool
+        :param balance_sheets: The balance sheets DataFrame.
+        :type balance_sheets: pd.DataFrame
+        :param pnl_sheets: The P&L sheets DataFrame.
+        :type pnl_sheets: pd.DataFrame
+        :param cash_flow_sheets: The cash flow statements DataFrame.
+        :type cash_flow_sheets: pd.DataFrame
+        """
         url = row["url"]
         tracing_id = row["tracing_id"]
         driver = drivers.get()
@@ -188,6 +292,18 @@ class Codal(Scraper, Preprocessor):
         is_scrap_cash_flow=True,
         n_threads=5,
     ):
+        """
+        Scrape the letters.
+
+        :param is_scrap_balance_sheets: Flag to scrape balance sheets.
+        :type is_scrap_balance_sheets: bool
+        :param is_scrap_pnl_sheets: Flag to scrape P&L sheets.
+        :type is_scrap_pnl_sheets: bool
+        :param is_scrap_cash_flow: Flag to scrape cash flow statements.
+        :type is_scrap_cash_flow: bool
+        :param n_threads: The number of threads to use for concurrent execution.
+        :type n_threads: int
+        """
         balance_sheets = self._load_or_create_csv(
             self.balance_sheets_path, BALANCE_SHEET_COLUMNS
         )

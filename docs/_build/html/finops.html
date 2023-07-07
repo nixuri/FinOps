@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>finops package &mdash; finops  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            finops
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">finops package</a><ul>
+<li><a class="reference internal" href="#subpackages">Subpackages</a></li>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-finops.codal">finops.codal module</a><ul>
+<li><a class="reference internal" href="#finops.codal.Codal"><code class="docutils literal notranslate"><span class="pre">Codal</span></code></a><ul>
+<li><a class="reference internal" href="#finops.codal.Codal.scrap_letters"><code class="docutils literal notranslate"><span class="pre">Codal.scrap_letters()</span></code></a></li>
+<li><a class="reference internal" href="#finops.codal.Codal.scrap_letters_list"><code class="docutils literal notranslate"><span class="pre">Codal.scrap_letters_list()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-finops.config">finops.config module</a></li>
+<li><a class="reference internal" href="#module-finops.logger">finops.logger module</a><ul>
+<li><a class="reference internal" href="#finops.logger.setup_logger"><code class="docutils literal notranslate"><span class="pre">setup_logger()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-finops.tehran_stock_exchange">finops.tehran_stock_exchange module</a><ul>
+<li><a class="reference internal" href="#finops.tehran_stock_exchange.TehranStockExchange"><code class="docutils literal notranslate"><span class="pre">TehranStockExchange</span></code></a><ul>
+<li><a class="reference internal" href="#finops.tehran_stock_exchange.TehranStockExchange.get_shareholders_data"><code class="docutils literal notranslate"><span class="pre">TehranStockExchange.get_shareholders_data()</span></code></a></li>
+<li><a class="reference internal" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers"><code class="docutils literal notranslate"><span class="pre">TehranStockExchange.get_stock_tickers()</span></code></a></li>
+<li><a class="reference internal" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers_index_list"><code class="docutils literal notranslate"><span class="pre">TehranStockExchange.get_stock_tickers_index_list()</span></code></a></li>
+<li><a class="reference internal" href="#finops.tehran_stock_exchange.TehranStockExchange.get_tickers"><code class="docutils literal notranslate"><span class="pre">TehranStockExchange.get_tickers()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-finops.ticker">finops.ticker module</a><ul>
+<li><a class="reference internal" href="#finops.ticker.Ticker"><code class="docutils literal notranslate"><span class="pre">Ticker</span></code></a><ul>
+<li><a class="reference internal" href="#finops.ticker.Ticker.get_price_history"><code class="docutils literal notranslate"><span class="pre">Ticker.get_price_history()</span></code></a></li>
+<li><a class="reference internal" href="#finops.ticker.Ticker.get_shareholder_data"><code class="docutils literal notranslate"><span class="pre">Ticker.get_shareholder_data()</span></code></a></li>
+<li><a class="reference internal" href="#finops.ticker.Ticker.get_traded_dates"><code class="docutils literal notranslate"><span class="pre">Ticker.get_traded_dates()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-finops">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">finops</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">finops package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/finops.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="finops-package">
+<h1>finops package<a class="headerlink" href="#finops-package" title="Permalink to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="finops.utils.html">finops.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#module-finops.utils.downloader">finops.utils.downloader module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.downloader.Downloader"><code class="docutils literal notranslate"><span class="pre">Downloader</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#module-finops.utils.preprocessor">finops.utils.preprocessor module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.preprocessor.Preprocessor"><code class="docutils literal notranslate"><span class="pre">Preprocessor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="finops.utils.html#finops.utils.preprocessor.Preprocessor.safe_select_columns"><code class="docutils literal notranslate"><span class="pre">Preprocessor.safe_select_columns()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#module-finops.utils.scraper">finops.utils.scraper module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.scraper.Scraper"><code class="docutils literal notranslate"><span class="pre">Scraper</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#module-finops.utils.wrappers">finops.utils.wrappers module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.wrappers.catch"><code class="docutils literal notranslate"><span class="pre">catch()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.wrappers.retry"><code class="docutils literal notranslate"><span class="pre">retry()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="finops.utils.html#finops.utils.wrappers.sleep"><code class="docutils literal notranslate"><span class="pre">sleep()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="finops.utils.html#module-finops.utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-finops.codal">
+<span id="finops-codal-module"></span><h2>finops.codal module<a class="headerlink" href="#module-finops.codal" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="finops.codal.Codal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">finops.codal.</span></span><span class="sig-name descname"><span class="pre">Codal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">store_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">driver_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'selenium/chromedriver'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="finops.utils.html#finops.utils.scraper.Scraper" title="finops.utils.scraper.Scraper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scraper</span></code></a>, <a class="reference internal" href="finops.utils.html#finops.utils.preprocessor.Preprocessor" title="finops.utils.preprocessor.Preprocessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.codal.Codal.scrap_letters">
+<span class="sig-name descname"><span class="pre">scrap_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_scrap_balance_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_scrap_pnl_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_scrap_cash_flow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal.scrap_letters" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.codal.Codal.scrap_letters_list">
+<span class="sig-name descname"><span class="pre">scrap_letters_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal.scrap_letters_list" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-finops.config">
+<span id="finops-config-module"></span><h2>finops.config module<a class="headerlink" href="#module-finops.config" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-finops.logger">
+<span id="finops-logger-module"></span><h2>finops.logger module<a class="headerlink" href="#module-finops.logger" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="finops.logger.setup_logger">
+<span class="sig-prename descclassname"><span class="pre">finops.logger.</span></span><span class="sig-name descname"><span class="pre">setup_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#finops.logger.setup_logger" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-finops.tehran_stock_exchange">
+<span id="finops-tehran-stock-exchange-module"></span><h2>finops.tehran_stock_exchange module<a class="headerlink" href="#module-finops.tehran_stock_exchange" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">finops.tehran_stock_exchange.</span></span><span class="sig-name descname"><span class="pre">TehranStockExchange</span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="finops.utils.html#finops.utils.scraper.Scraper" title="finops.utils.scraper.Scraper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scraper</span></code></a>, <a class="reference internal" href="finops.utils.html#finops.utils.preprocessor.Preprocessor" title="finops.utils.preprocessor.Preprocessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_shareholders_data">
+<span class="sig-name descname"><span class="pre">get_shareholders_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tickers_index_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_threads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_shareholders_data" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves and stores the shareholder data for multiple tickers.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>start_date (pd.Timestamp): The start date.
+end_date (pd.Timestamp): The end date.
+store_path (str): The path to store the shareholder data.
+log_path (str): The path to store the log data.
+tickers_index_list (list, optional): List of ticker indices. If not provided, stock tickers will be used.
+n_threads (int, optional): The number of threads to use for concurrent execution.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers">
+<span class="sig-name descname"><span class="pre">get_stock_tickers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the stock tickers.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>pd.DataFrame: The stock tickers.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers_index_list">
+<span class="sig-name descname"><span class="pre">get_stock_tickers_index_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers_index_list" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the list of stock ticker indices.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list: List of stock ticker indices.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_tickers">
+<span class="sig-name descname"><span class="pre">get_tickers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_tickers" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the tickers from Tehran Stock Exchange.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>pd.DataFrame: The tickers data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-finops.ticker">
+<span id="finops-ticker-module"></span><h2>finops.ticker module<a class="headerlink" href="#module-finops.ticker" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="finops.ticker.Ticker">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">finops.ticker.</span></span><span class="sig-name descname"><span class="pre">Ticker</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ticker_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.ticker.Ticker" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="finops.utils.html#finops.utils.scraper.Scraper" title="finops.utils.scraper.Scraper"><code class="xref py py-class docutils literal notranslate"><span class="pre">Scraper</span></code></a>, <a class="reference internal" href="finops.utils.html#finops.utils.preprocessor.Preprocessor" title="finops.utils.preprocessor.Preprocessor"><code class="xref py py-class docutils literal notranslate"><span class="pre">Preprocessor</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.ticker.Ticker.get_price_history">
+<span class="sig-name descname"><span class="pre">get_price_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.ticker.Ticker.get_price_history" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the price history for the ticker.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>timeout (float): Timeout value for the download request.</p>
+</dd>
+<dt>Returns:</dt><dd><p>pd.DataFrame: The price history data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.ticker.Ticker.get_shareholder_data">
+<span class="sig-name descname"><span class="pre">get_shareholder_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.ticker.Ticker.get_shareholder_data" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves and stores the shareholder data for a range of dates.</p>
+<dl class="simple">
+<dt>Args:</dt><dd><p>start_date (pd.Timestamp): The start date of the date range.
+end_date (pd.Timestamp): The end date of the date range.
+store_path (str): The path to store the shareholder data.
+log_path (str): The path to store the log data.
+verbose (bool): Flag to enable verbose logging.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="finops.ticker.Ticker.get_traded_dates">
+<span class="sig-name descname"><span class="pre">get_traded_dates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#finops.ticker.Ticker.get_traded_dates" title="Permalink to this definition"></a></dt>
+<dd><p>Retrieves the traded dates for the ticker.</p>
+<dl class="simple">
+<dt>Returns:</dt><dd><p>list: List of traded dates.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-finops">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-finops" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Alireza Nilgaran.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

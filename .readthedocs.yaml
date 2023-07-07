@@ -11,7 +11,6 @@ build:
   tools:
     python: "3.11"
     commands:
-        - pip install numpy
     		- make html
         - mkdir --parents _readthedocs/html/
     		- cp --recursive docs/build/* _readthedocs/html/

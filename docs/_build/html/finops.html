@@ -153,12 +153,35 @@
 <dl class="py method">
 <dt class="sig sig-object py" id="finops.codal.Codal.scrap_letters">
 <span class="sig-name descname"><span class="pre">scrap_letters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">is_scrap_balance_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_scrap_pnl_sheets</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_scrap_cash_flow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal.scrap_letters" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Scrape the letters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>is_scrap_balance_sheets</strong> (<em>bool</em>) – Flag to scrape balance sheets.</p></li>
+<li><p><strong>is_scrap_pnl_sheets</strong> (<em>bool</em>) – Flag to scrape P&amp;L sheets.</p></li>
+<li><p><strong>is_scrap_cash_flow</strong> (<em>bool</em>) – Flag to scrape cash flow statements.</p></li>
+<li><p><strong>n_threads</strong> (<em>int</em>) – The number of threads to use for concurrent execution.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="finops.codal.Codal.scrap_letters_list">
-<span class="sig-name descname"><span class="pre">scrap_letters_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal.scrap_letters_list" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">scrap_letters_list</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">search_params</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_page_number</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stocks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_threads</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.codal.Codal.scrap_letters_list" title="Permalink to this definition"></a></dt>
+<dd><p>Scrape the letters list.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>search_params</strong> (<em>dict</em>) – The search parameters.</p></li>
+<li><p><strong>start_page_number</strong> (<em>int</em><em>, </em><em>optional</em>) – The starting page number (optional).</p></li>
+<li><p><strong>stocks</strong> (<em>list</em><em>, </em><em>optional</em>) – List of stocks to filter (optional).</p></li>
+<li><p><strong>n_threads</strong> (<em>int</em>) – The number of threads to use for concurrent execution.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Flag to enable verbose logging.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 </dd></dl>
 
@@ -184,13 +207,16 @@
 <dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_shareholders_data">
 <span class="sig-name descname"><span class="pre">get_shareholders_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tickers_index_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_threads</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_shareholders_data" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves and stores the shareholder data for multiple tickers.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>start_date (pd.Timestamp): The start date.
-end_date (pd.Timestamp): The end date.
-store_path (str): The path to store the shareholder data.
-log_path (str): The path to store the log data.
-tickers_index_list (list, optional): List of ticker indices. If not provided, stock tickers will be used.
-n_threads (int, optional): The number of threads to use for concurrent execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>pd.Timestamp</em>) – The start date.</p></li>
+<li><p><strong>end_date</strong> (<em>pd.Timestamp</em>) – The end date.</p></li>
+<li><p><strong>store_path</strong> (<em>str</em>) – The path to store the shareholder data.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – The path to store the log data.</p></li>
+<li><p><strong>tickers_index_list</strong> (<em>list</em><em>, </em><em>optional</em>) – List of ticker indices. If not provided, stock tickers will be used.</p></li>
+<li><p><strong>n_threads</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of threads to use for concurrent execution.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -199,8 +225,12 @@ n_threads (int, optional): The number of threads to use for concurrent execution
 <dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers">
 <span class="sig-name descname"><span class="pre">get_stock_tickers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the stock tickers.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.DataFrame: The stock tickers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The stock tickers.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -209,8 +239,12 @@ n_threads (int, optional): The number of threads to use for concurrent execution
 <dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers_index_list">
 <span class="sig-name descname"><span class="pre">get_stock_tickers_index_list</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_stock_tickers_index_list" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the list of stock ticker indices.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>list: List of stock ticker indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of stock ticker indices.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
 </dd>
 </dl>
 </dd></dl>
@@ -219,8 +253,12 @@ n_threads (int, optional): The number of threads to use for concurrent execution
 <dt class="sig sig-object py" id="finops.tehran_stock_exchange.TehranStockExchange.get_tickers">
 <span class="sig-name descname"><span class="pre">get_tickers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.tehran_stock_exchange.TehranStockExchange.get_tickers" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the tickers from Tehran Stock Exchange.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>pd.DataFrame: The tickers data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The tickers data.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -238,10 +276,15 @@ n_threads (int, optional): The number of threads to use for concurrent execution
 <dt class="sig sig-object py" id="finops.ticker.Ticker.get_price_history">
 <span class="sig-name descname"><span class="pre">get_price_history</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#finops.ticker.Ticker.get_price_history" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the price history for the ticker.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>timeout (float): Timeout value for the download request.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>timeout</strong> (<em>float</em>) – Timeout value for the download request.</p>
 </dd>
-<dt>Returns:</dt><dd><p>pd.DataFrame: The price history data.</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The price history data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -250,12 +293,15 @@ n_threads (int, optional): The number of threads to use for concurrent execution
 <dt class="sig sig-object py" id="finops.ticker.Ticker.get_shareholder_data">
 <span class="sig-name descname"><span class="pre">get_shareholder_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Timestamp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#finops.ticker.Ticker.get_shareholder_data" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves and stores the shareholder data for a range of dates.</p>
-<dl class="simple">
-<dt>Args:</dt><dd><p>start_date (pd.Timestamp): The start date of the date range.
-end_date (pd.Timestamp): The end date of the date range.
-store_path (str): The path to store the shareholder data.
-log_path (str): The path to store the log data.
-verbose (bool): Flag to enable verbose logging.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_date</strong> (<em>pd.Timestamp</em>) – The start date of the date range.</p></li>
+<li><p><strong>end_date</strong> (<em>pd.Timestamp</em>) – The end date of the date range.</p></li>
+<li><p><strong>store_path</strong> (<em>str</em>) – The path to store the shareholder data.</p></li>
+<li><p><strong>log_path</strong> (<em>str</em>) – The path to store the log data.</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em>) – Flag to enable verbose logging.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -264,8 +310,12 @@ verbose (bool): Flag to enable verbose logging.</p>
 <dt class="sig sig-object py" id="finops.ticker.Ticker.get_traded_dates">
 <span class="sig-name descname"><span class="pre">get_traded_dates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#finops.ticker.Ticker.get_traded_dates" title="Permalink to this definition"></a></dt>
 <dd><p>Retrieves the traded dates for the ticker.</p>
-<dl class="simple">
-<dt>Returns:</dt><dd><p>list: List of traded dates.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List of traded dates.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>list</p>
 </dd>
 </dl>
 </dd></dl>

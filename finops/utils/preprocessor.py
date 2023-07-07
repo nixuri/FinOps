@@ -236,7 +236,7 @@ class Preprocessor:
         letter_df["is_audited"] = "حسابرسی شده" in info["letter_title"]
         letter_df["is_correction"] = "اصلاحیه" in info["letter_title"]
         letter_df["is_consolidated"] = "تلفیقی" in info["letter_title"]
-        period_type = re.search(r"(سال مالی|میاندوره‌ای)", info["letter_title"])
+        period_type = re.search(r"(سال مالی|میاندوره‌ای|میاندوره ای)", info["letter_title"])
         if period_type is not None:
             letter_df["period_type"] = "annual" if period_type.group() == "سال مالی" else "interim"
         letter_df["period_length"] = (

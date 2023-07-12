@@ -2,7 +2,7 @@ import re
 import requests
 import concurrent
 import pandas as pd
-from finops.config import TICKERS_URL, USER_AGENT
+from finops.config import TICKERS_URL, USER_AGENT, SHAREHOLDER_DATA_COLUMNS
 from finops.utils.scraper import Scraper
 from finops.utils.preprocessor import Preprocessor
 from finops.ticker import Ticker
@@ -42,8 +42,23 @@ class TehranStockExchange(Scraper, Preprocessor):
         stock_tickers_df = self.get_stock_tickers()
         tickers_index_list = stock_tickers_df.ticker_index.tolist()
         return tickers_index_list
+    
+    def get_price_histories(self, tickers_index_list, store_path):
+        """
+        Retrieves and stores the price history for multiple tickers.
 
-    def _get_shareholder_data_thread(
+        :param tickers_index_list: List of ticker indices.
+        :type tickers_index_list: list
+        :param store_path: The path to store the price history.
+        :type store_path: str
+        """
+        if tickers_index_list is None:
+            tickers_index_list = self.get_stock_tickers_index_list()
+        price_history = self._load_or_create_csv(store_path, SHAREHOLDER_DATA_COLUMNS)
+        for ticker_index in tickers_index_list:
+            self._save_csv(Ticker(ticker_index).get_price_history(), store_path)
+
+    def _get_shareholder_data_wrapper(
         self,
         ticker_index: str,
         start_date: pd.Timestamp,
@@ -99,7 +114,7 @@ class TehranStockExchange(Scraper, Preprocessor):
         with concurrent.futures.ThreadPoolExecutor(max_workers=n_threads) as executor:
             futures = [
                 executor.submit(
-                    self._get_shareholder_data_thread,
+                    self._get_shareholder_data_wrapper,
                     ticker_index,
                     start_date,
                     end_date,

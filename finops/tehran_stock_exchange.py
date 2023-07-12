@@ -2,7 +2,7 @@ import re
 import requests
 import concurrent
 import pandas as pd
-from finops.config import TICKERS_URL, USER_AGENT, SHAREHOLDER_DATA_COLUMNS
+from finops.config import TICKERS_URL, USER_AGENT, PRICE_HISTORY_DATA_COLUMNS
 from finops.utils.scraper import Scraper
 from finops.utils.preprocessor import Preprocessor
 from finops.ticker import Ticker
@@ -42,7 +42,7 @@ class TehranStockExchange(Scraper, Preprocessor):
         stock_tickers_df = self.get_stock_tickers()
         tickers_index_list = stock_tickers_df.ticker_index.tolist()
         return tickers_index_list
-    
+
     def get_price_histories(self, store_path, tickers_index_list=None):
         """
         Retrieves and stores the price history for multiple tickers.

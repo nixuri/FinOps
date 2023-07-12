@@ -43,7 +43,7 @@ class TehranStockExchange(Scraper, Preprocessor):
         tickers_index_list = stock_tickers_df.ticker_index.tolist()
         return tickers_index_list
     
-    def get_price_histories(self, tickers_index_list, store_path):
+    def get_price_histories(self, store_path, tickers_index_list=None):
         """
         Retrieves and stores the price history for multiple tickers.
 

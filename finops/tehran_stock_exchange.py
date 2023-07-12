@@ -54,7 +54,7 @@ class TehranStockExchange(Scraper, Preprocessor):
         """
         if tickers_index_list is None:
             tickers_index_list = self.get_stock_tickers_index_list()
-        price_history = self._load_or_create_csv(store_path, SHAREHOLDER_DATA_COLUMNS)
+        price_history = self._load_or_create_csv(store_path, PRICE_HISTORY_DATA_COLUMNS)
         for ticker_index in tickers_index_list:
             self._save_csv(Ticker(ticker_index).get_price_history(), store_path)
 

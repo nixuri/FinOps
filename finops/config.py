@@ -19,9 +19,9 @@ PRICE_HISTORY_DATA_COLUMNS = [
     "value",
     "volume",
     "open_int",
-    "per",
     "open",
     "last",
+    "ticker_index",
 ]
 
 SHAREHOLDER_DATA_COLUMNS = [
